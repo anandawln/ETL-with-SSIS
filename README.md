@@ -4,6 +4,6 @@
 - The purchase data is in SQL Server, the currency conversion data is in excel, and the customer contract information is in a csv file
 - The task is to bring this data together in a new SQL Server database for the business
 
-## Tech Stack
+## Requirements
 - SQL Server Developer Edition 2022
 - Visual Studio Installer (SSMS & Visual Studio Community 2022)
