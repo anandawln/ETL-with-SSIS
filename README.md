@@ -7,3 +7,11 @@
 ## Requirements
 - SQL Server Developer Edition 2022
 - Visual Studio Installer (SSMS & Visual Studio Community 2022)
+
+## Project Overview
+### ETL and Data Warehousing
+### Transformations
+### Parameters
+### Server Convigurations
+### Scheduling
+### Advanced API Call
