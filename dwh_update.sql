@@ -45,3 +45,6 @@ select * from dbo.suppliers
 alter table dbo.financial_transactions
 add amount_USD
 
+alter table dbo.financial_transactions
+add [supplier_contact_name] [varchar](100) NULL
+	[supplier_phone] [varchar](25) NULL
