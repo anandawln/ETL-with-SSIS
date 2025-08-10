@@ -42,3 +42,6 @@ phone varchar(25)
 select * from dbo.exchange_rates
 select * from dbo.suppliers
 
+alter table dbo.financial_transactions
+add amount_USD
+
