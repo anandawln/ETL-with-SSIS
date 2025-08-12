@@ -14,7 +14,7 @@
 ```sql
 CREATE DATABASE financial_transactions_db;
 ```
-- Create a table with the following contents
+- Create financial_transactions table with the following contents
 ```sql
 CREATE TABLE financial_transactions (
     transaction_id INT PRIMARY KEY,
@@ -34,6 +34,60 @@ VALUES
     (3, 103, 'Global Inc', '2024-02-05', 2000.00, 'GBP'),
     (4, 104, 'ABC Corp', '2024-02-10', 500.25, 'USD');
 ```
+- Create customer_details table
+```sql
+CREATE TABLE customer_details (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    email VARCHAR(100),
+    phone VARCHAR(20)
+);
+```
+
+- Insert the data
+```sql
+INSERT INTO customer_details (customer_id, customer_name, email, phone)
+VALUES
+    (101, 'John Doe', 'john.doe@example.com', '123-456-7890'),
+    (102, 'Jane Smith', 'jane.smith@example.com', '234-567-8901'),
+    (103, 'Mike Johnson', 'mike.johnson@example.com', '345-678-9012'),
+    (104, 'Emily Davis', 'emily.davis@example.com', '456-789-0123');
+```
+
+### Creating Warehouse Destination for ETL
+- Create a Data Warehouse database named financial_data_warehouse
+```sql
+CREATE DATABASE financial_data_warehouse;
+```
+- Create the table
+```sql
+USE [financial_data_warehouse]
+GO
+
+/****** Object:  Table [dbo].[financial_transactions] ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[financial_transactions](
+	[transaction_id] [int] NOT NULL,
+	[customer_id] [int] NULL,
+	[supplier_name] [varchar](50) NULL,
+	[transaction_date] [date] NULL,
+	[amount] [decimal](10, 2) NULL,
+	[currency] [varchar](10) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[transaction_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+```
+### Initialize ETL
+
+
 ## 🔄Transformations
 ## ⚙️ Parameters
 ## 🖥️ Server Convigurations
