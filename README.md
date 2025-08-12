@@ -90,7 +90,26 @@ GO
 
 ## 🔄Transformations
 ## ⚙️ Parameters
+<div align="center">
+<img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/params.png">
+</div>
+
 ## 🖥️ Server Convigurations
 ## 🚀 Deploying the SSIS Package to SQL Server
+
+<div align="center">
+<img width = "50%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_passed.png">
+</div>
+
+<div align="center">
+<img width = "30%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_check.png">
+</div>
+
+
+
 ## ⏰ Scheduling  
+<div align="center">
+<img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/scheduling.png">
+</div>
+a
 ## 🌐 Advanced API Call with C#
