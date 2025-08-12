@@ -1,14 +1,14 @@
-# Build Data Warehouse for Finance Case and ETL Pipeline using SSIS
-## Business Request
+# 📊 Build Data Warehouse for Finance Case and ETL Pipeline using SSIS
+## 📝 Business Request
 - The business has customer purchase data in local currency, but needs that data converted and needs the customer contact information with it
 - The purchase data is in SQL Server, the currency conversion data is in excel, and the customer contract information is in a csv file
 - The task is to bring this data together in a new SQL Server database for the business
 
-## Requirements
+## 📌 Requirements
 - SQL Server Developer Edition 2022
-- Visual Studio Installer (SSMS & Visual Studio Community 2022)
+- Visual Studio Installer (SSMS & Visual Studio Community 2022 [SSIS Extension])
 
-## ETL and Data Warehousing
+## 🛠️ ETL and Data Warehousing
 ### Source Data to SQL Server Database
 - Create a database named financial_transactions_db
 ```sql
@@ -34,9 +34,9 @@ VALUES
     (3, 103, 'Global Inc', '2024-02-05', 2000.00, 'GBP'),
     (4, 104, 'ABC Corp', '2024-02-10', 500.25, 'USD');
 ```
-## Transformations
-## Parameters
-## Server Convigurations
-## Deploying the SSIS Package to SQL Server
-## Scheduling
-## Advanced API Call
+## 🔄Transformations
+## ⚙️ Parameters
+## 🖥️ Server Convigurations
+## 🚀 Deploying the SSIS Package to SQL Server
+## ⏰ Scheduling  
+## 🌐 Advanced API Call with C#
