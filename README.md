@@ -96,20 +96,22 @@ GO
 
 ## 🖥️ Server Convigurations
 ## 🚀 Deploying the SSIS Package to SQL Server
-
-<div align="center">
-<img width = "50%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_passed.png">
-</div>
-
-<div align="center">
-<img width = "30%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_check.png">
-</div>
-
-
+To deploy an SSIS package from Visual Studio to the SSIS Catalog in SQL Server Management Studio (SSMS), follow these steps:  
+- Open Visual Studio, then in the **Solution Explorer** panel, right-click the SSIS project you want to deploy.  
+- Select the **Deploy** option to begin the deployment process.  
+- Follow all steps in the **Integration Services Deployment Wizard** until completion.  
+- If you encounter any issues during deployment, refer to the Refer to the [`debugging.md`](settings/debugging.md) file for troubleshooting guidance.
+- Once deployment is successful, the catalog name will appear under the **Integration Services Catalogs** section in SSMS.  
+<p align="center">
+  <img src="https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_passed.png" width="45%"/>
+  <img src="https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_check.png" width="40%"/>
+</p>
 
 ## ⏰ Scheduling  
+Use SQL Server Agent to schedule packages, ensuring they run automatically at set intervals. 
 <div align="center">
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/scheduling.png">
 </div>
 
 ## 🌐 Advanced API Call with C#
+
