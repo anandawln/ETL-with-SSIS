@@ -111,5 +111,5 @@ GO
 <div align="center">
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/scheduling.png">
 </div>
-a
+
 ## 🌐 Advanced API Call with C#
