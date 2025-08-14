@@ -245,8 +245,7 @@ Make sure the data types match the expected API response format.
    - Parse the JSON response.
    - Populate the output buffer with the parsed data.
 
-💡 You can refer to the sample script in `scriptAPI.cs` located in the `Settings` folder of your project.
-
+💡 You can refer to the sample script in [`scriptAPI.cs`](settings/scriptAPI.cs)
 ### 🔄 Updated Data Flow Sequence
 ```text
 Script Component (Exchange API)
