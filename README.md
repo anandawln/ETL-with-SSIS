@@ -87,7 +87,7 @@ GO
 ```
 ---
 
-### 🏗️ Step 1: Source Database Setup (`financial_transactions_db`)
+## 🏗️ Source Database Setup (`financial_transactions_db`)
 1. Create a database named `financial_transactions_db` in SQL Server Management Studio (SSMS).
 2. Create the table `financial_transactions` with columns:
    - `transaction_id`, `customer_id`, `supplier_name`, `transaction_date`, `amount`, `currency`
@@ -96,27 +96,27 @@ GO
    - `customer_id`, `customer_name`, `email`, `phone`
 5. Insert customer data into the table.
 
-### 📁 Step 2: External Data Sources
+## 📁 External Data Sources
 Include two external files:
 - `exchange_rates.xlsx` containing: `from_currency`, `to_currency`, `exchange_rate`, `effective_date`
 - `suppliers.csv` containing: `supplier_id`, `supplier_name`, `contact_name`, `phone`
 
-### 🏢 Step 3: Target Data Warehouse Setup (`financial_data_warehouse`)
+## 🏢 Target Data Warehouse Setup (`financial_data_warehouse`)
 1. Create a new database named `financial_data_warehouse`.
 2. Create the table `financial_transactions` with the same structure as the source table.
 
-### 🔄 Step 4: SSIS Data Flow Task – `CustomerTransactions`
+## 🔄 SSIS Data Flow Task – `CustomerTransactions`
 1. Create a Data Flow Task named `CustomerTransactions`.
 2. Add components:
    - **OLE DB Source**: connect to `financial_transactions_db`
    - **OLE DB Destination**: connect to `financial_data_warehouse`
 3. Execute the task to transfer initial data.
 
-### 🔗 Step 5: Project Connection Configuration
+## 🔗 Project Connection Configuration
 1. In SSIS, right-click both connections (`financial_transactions_db` and `financial_data_warehouse`) in the Connection Manager.
 2. Select **Convert to Project Connection** so they appear in the Solution Manager.
 
-### 🔍 Step 6: Data Enrichment via SQL Join
+## 🔍 Data Enrichment via SQL Join
 1. Use the following SQL query to enrich transaction data with customer details:
 
 ```sql
@@ -143,7 +143,7 @@ ADD
 
 4. Re-run the task to load enriched data.
 
-### ⚠️ Step 7: Handling Duplicate Data
+## ⚠️ Handling Duplicate Data
 To prevent duplication errors, add an **Execute SQL Task** before the Data Flow Task with:
 
 ```sql
@@ -152,7 +152,7 @@ TRUNCATE TABLE dbo.financial_transactions
 
 Then re-run the task.
 
-### 📥 Step 8: Import `exchange_rates.xlsx`
+## 📥 Import `exchange_rates.xlsx`
 1. Create a Data Flow Task named `ExchangeRates`.
 2. Add components:
    - **Excel Source**: connect to the Excel file
@@ -160,7 +160,7 @@ Then re-run the task.
    - **OLE DB Destination**: connect to `dbo.exchange_rates`
 3. Run the task.
 
-### 📥 Step 9: Import `suppliers.csv`
+## 📥 Import `suppliers.csv`
 1. Create a Data Flow Task named `Suppliers`.
 2. Add components:
    - **Flat File Source**: connect to the CSV file
@@ -168,7 +168,7 @@ Then re-run the task.
    - **OLE DB Destination**: connect to `dbo.suppliers`
 3. Run the task.
 
-### 🧹 Step 10: Truncate Before Import
+## 🧹 Truncate Before Import
 To avoid duplicates, add **Execute SQL Tasks** before each import task:
 
 ```sql
@@ -176,7 +176,7 @@ TRUNCATE TABLE dbo.exchange_rates
 TRUNCATE TABLE dbo.suppliers
 ```
 
-### 💱 Step 11: Currency Conversion
+## 💱 Currency Conversion
 Add a new column to store converted amounts:
 
 ```sql
@@ -184,7 +184,7 @@ ALTER TABLE dbo.financial_transactions
 ADD amount_USD FLOAT
 ```
 
-### 📞 Step 12: Supplier Contact Enrichment *(Optional Enhancement)*
+## 📞 Supplier Contact Enrichment *(Optional Enhancement)*
 Add supplier contact details to the warehouse table:
 
 ```sql
