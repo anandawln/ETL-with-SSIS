@@ -192,15 +192,12 @@ ALTER TABLE dbo.financial_transactions
 ADD supplier_contact_name VARCHAR(100), 
     supplier_phone VARCHAR(20)
 ```
-
----
 ## ⚙️ Parameters
 <div align="center">
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/params.png">
 </div>
 
-## 🖥️ Server Convigurations
-## 🚀 Deploying the SSIS Package to SQL Server
+# 🚀 Deploying the SSIS Package to SQL Server
 To deploy an SSIS package from Visual Studio to the SSIS Catalog in SQL Server Management Studio (SSMS), follow these steps:  
 - Open Visual Studio, then in the **Solution Explorer** panel, right-click the SSIS project you want to deploy.  
 - Select the **Deploy** option to begin the deployment process.  
@@ -212,7 +209,51 @@ To deploy an SSIS package from Visual Studio to the SSIS Catalog in SQL Server M
   <img src="https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_check.png" width="40%"/>
 </p>
 
-## ⏰ Scheduling  
+## ⏰ SSIS Deployment with Environment Parameters and SQL Server Agent Job
+
+This guide outlines the steps to deploy an SSIS package to **SSISDB** using **Environment Parameters**, and schedule its execution via **SQL Server Agent Job**. Ideal for Dev/Test/Prod scenarios requiring dynamic configuration.
+
+## 🧭 Deployment Steps
+
+### 1. Create an Environment in SSISDB
+- Open **Integration Services Catalogs** in SSMS.
+- Right-click on your project folder in `SSISDB`, select **Create Environment**.
+- Name the environment, e.g., `Dev`.
+
+### 2. Add Environment Variables
+- Right-click on the `Dev` environment, select **Properties**.
+- Go to the **Variables** tab and add variables that match the parameters used in your package (e.g., `ConnectionString`, `FilePath`, etc.).
+- Ensure the variable names and data types match the package parameters.
+
+### 3. Link Environment to Project
+- Right-click on the project in SSISDB, select **Configure**.
+- Navigate to the **References** tab, click **Add Reference**, and select the `Dev` environment.
+- Once linked, go to the **Parameters** tab.
+- For each parameter, check **Use Environment Variable** and map it to the corresponding variable from `Dev`.
+
+### 4. Create a SQL Server Agent Job
+- Open **SQL Server Agent** → right-click → **New Job**.
+- Name the job according to your project/package.
+
+#### 4.1 Add a Job Step
+- Go to the **Steps** tab → click **New**.
+- Name the step and select **SQL Server Integration Services Package** as the type.
+- Choose the correct server and SSIS package from SSISDB.
+- In the **Configuration** section, check the **Environment** box and select `Dev`.
+- Ensure there are no red warnings under parameter values.
+
+### 5. Run and Schedule the Job
+- After creating the job, right-click → **Start Job at Step** to run it manually.
+- To schedule automatic execution:
+  - Go to the **Schedules** tab → click **New**.
+  - Set the frequency, time, and enable the schedule as needed.
+
+## ✅ Additional Tips
+- Make sure all required parameters are exposed as **Package Parameters**, not just **Project Parameters**, for better flexibility.
+- Use consistent and descriptive variable names for easier mapping.
+- Check SQL Server Agent logs for troubleshooting if the job fails.
+
+## 📁 Recommended SSISDB Structure and Settings for Scheduling
 Use SQL Server Agent to schedule packages, ensuring they run automatically at set intervals. 
 <div align="center">
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/scheduling.png">
