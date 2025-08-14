@@ -192,7 +192,31 @@ ALTER TABLE dbo.financial_transactions
 ADD supplier_contact_name VARCHAR(100), 
     supplier_phone VARCHAR(20)
 ```
-## ⚙️ Parameters
+## 🔧 Setting Project Parameters for Connection Strings
+
+To make your SSIS package deployment more flexible and environment-aware, it's recommended to parameterize your **Connection Managers** using **Project Parameters**. This allows you to dynamically assign connection strings based on the selected environment (e.g., Dev, Test, Prod).
+
+### 🛠️ Steps to Parameterize Connection Strings
+
+1. **Open Connection Managers**
+   - In your SSIS project (inside Visual Studio), go to the **Connection Managers** pane at the bottom.
+
+2. **Parameterize Each Connection**
+   - Right-click on each connection (e.g., OLE DB, Flat File, Excel).
+   - Select **Parameterize**.
+   - Choose the property to parameterize—typically the **ConnectionString**.
+   - Confirm and apply. This will automatically create a new entry in `Project.params`.
+
+3. **Verify Project Parameters**
+   - Go to the **Project.params** file to confirm that the parameters have been created.
+   - You should see entries like `ConnectionString_Dev`, `ConnectionString_Prod`, etc., depending on your naming convention.
+
+4. **Link Parameters to Environment Variables**
+   - After deploying the project to SSISDB:
+     - Go to **Configure** → **Parameters** tab.
+     - Check **Use Environment Variable** for each connection string parameter.
+     - Map it to the corresponding variable in your environment (e.g., `Dev.ConnectionString`).
+
 <div align="center">
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/params.png">
 </div>
