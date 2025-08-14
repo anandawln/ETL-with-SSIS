@@ -218,5 +218,57 @@ Use SQL Server Agent to schedule packages, ensuring they run automatically at se
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/scheduling.png">
 </div>
 
-## 🌐 Advanced API Call with C#
+## 🌐 Integrating Exchange Rates via API (SSIS + C#)
 
+### 📦 Duplicate and Modify SSIS Package
+1. Copy the existing SSIS package `financial_transactions.dtsx`.
+2. Rename the copy to `financial_transactions-API.dtsx`.
+3. Open the new package and navigate to the **Data Flow** tab under the `ExchangeRates` task.
+
+### 🔧 Replace Excel Source with API
+1. In the **SSIS Toolbox**, drag in a **Script Component** and set its type to **Source**.
+2. This component will replace the previous Excel source (`exchange_rates.xlsx`) as the new data provider.
+
+### ⚙️ Configure Script Component Output
+Define the following output columns:
+- `from_currency` (string)
+- `to_currency` (string)
+- `exchange_rate` (float or decimal)
+- `effective_date` (DT_DATE)
+
+Make sure the data types match the expected API response format.
+
+### 🧠 Implement C# Script for API Call
+1. Click **Edit Script** on the Script Component.
+2. Write the logic inside the `CreateNewOutputRows()` method to:
+   - Perform an HTTP GET request to the exchange rate API.
+   - Parse the JSON response.
+   - Populate the output buffer with the parsed data.
+
+💡 You can refer to the sample script in `scriptAPI.cs` located in the `Settings` folder of your project.
+
+### 🔄 Updated Data Flow Sequence
+```text
+Script Component (Exchange API)
+        ↓
+Data Conversion
+        ↓
+Derived Column (optional logic, e.g. converting to base currency)
+        ↓
+OLE DB Destination → dbo.exchange_rates
+```
+
+### 🧹 Pre-Load Cleanup
+To avoid duplicate entries, add an **Execute SQL Task** before the Data Flow Task:
+
+```sql
+TRUNCATE TABLE dbo.exchange_rates
+```
+
+### ✅ Additional Notes
+- Ensure internet connectivity during package execution.
+- If the API has rate limits, consider adding retry logic or delay handling in the script.
+- Validate incoming data (e.g., exchange rates should not be zero or negative).
+- Add logging inside the script for easier debugging and monitoring.
+
+---
