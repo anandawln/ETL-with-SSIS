@@ -87,7 +87,7 @@ GO
 ```
 ---
 
-## 🏗️ Source Database Setup (`financial_transactions_db`)
+### Source Database Setup (`financial_transactions_db`)
 1. Create a database named `financial_transactions_db` in SQL Server Management Studio (SSMS).
 2. Create the table `financial_transactions` with columns:
    - `transaction_id`, `customer_id`, `supplier_name`, `transaction_date`, `amount`, `currency`
@@ -96,27 +96,27 @@ GO
    - `customer_id`, `customer_name`, `email`, `phone`
 5. Insert customer data into the table.
 
-## 📁 External Data Sources
+### External Data Sources
 Include two external files:
 - `exchange_rates.xlsx` containing: `from_currency`, `to_currency`, `exchange_rate`, `effective_date`
 - `suppliers.csv` containing: `supplier_id`, `supplier_name`, `contact_name`, `phone`
 
-## 🏢 Target Data Warehouse Setup (`financial_data_warehouse`)
+### Target Data Warehouse Setup (`financial_data_warehouse`)
 1. Create a new database named `financial_data_warehouse`.
 2. Create the table `financial_transactions` with the same structure as the source table.
 
-## 🔄 SSIS Data Flow Task – `CustomerTransactions`
+### SSIS Data Flow Task – `CustomerTransactions`
 1. Create a Data Flow Task named `CustomerTransactions`.
 2. Add components:
    - **OLE DB Source**: connect to `financial_transactions_db`
    - **OLE DB Destination**: connect to `financial_data_warehouse`
 3. Execute the task to transfer initial data.
 
-## 🔗 Project Connection Configuration
+### Project Connection Configuration
 1. In SSIS, right-click both connections (`financial_transactions_db` and `financial_data_warehouse`) in the Connection Manager.
 2. Select **Convert to Project Connection** so they appear in the Solution Manager.
 
-## 🔍 Data Enrichment via SQL Join
+### Data Enrichment via SQL Join
 1. Use the following SQL query to enrich transaction data with customer details:
 
 ```sql
@@ -143,7 +143,7 @@ ADD
 
 4. Re-run the task to load enriched data.
 
-## ⚠️ Handling Duplicate Data
+### Handling Duplicate Data
 To prevent duplication errors, add an **Execute SQL Task** before the Data Flow Task with:
 
 ```sql
@@ -152,7 +152,7 @@ TRUNCATE TABLE dbo.financial_transactions
 
 Then re-run the task.
 
-## 📥 Import `exchange_rates.xlsx`
+### Import `exchange_rates.xlsx`
 1. Create a Data Flow Task named `ExchangeRates`.
 2. Add components:
    - **Excel Source**: connect to the Excel file
@@ -160,7 +160,7 @@ Then re-run the task.
    - **OLE DB Destination**: connect to `dbo.exchange_rates`
 3. Run the task.
 
-## 📥 Import `suppliers.csv`
+### Import `suppliers.csv`
 1. Create a Data Flow Task named `Suppliers`.
 2. Add components:
    - **Flat File Source**: connect to the CSV file
@@ -168,7 +168,7 @@ Then re-run the task.
    - **OLE DB Destination**: connect to `dbo.suppliers`
 3. Run the task.
 
-## 🧹 Truncate Before Import
+### Truncate Before Import
 To avoid duplicates, add **Execute SQL Tasks** before each import task:
 
 ```sql
@@ -176,7 +176,7 @@ TRUNCATE TABLE dbo.exchange_rates
 TRUNCATE TABLE dbo.suppliers
 ```
 
-## 💱 Currency Conversion
+### Currency Conversion
 Add a new column to store converted amounts:
 
 ```sql
@@ -184,7 +184,7 @@ ALTER TABLE dbo.financial_transactions
 ADD amount_USD FLOAT
 ```
 
-## 📞 Supplier Contact Enrichment *(Optional Enhancement)*
+### Supplier Contact Enrichment *(Optional Enhancement)*
 Add supplier contact details to the warehouse table:
 
 ```sql
@@ -196,7 +196,7 @@ ADD supplier_contact_name VARCHAR(100),
 
 To make your SSIS package deployment more flexible and environment-aware, it's recommended to parameterize your **Connection Managers** using **Project Parameters**. This allows you to dynamically assign connection strings based on the selected environment (e.g., Dev, Test, Prod).
 
-### 🛠️ Steps to Parameterize Connection Strings
+### Steps to Parameterize Connection Strings
 
 1. **Open Connection Managers**
    - In your SSIS project (inside Visual Studio), go to the **Connection Managers** pane at the bottom.
@@ -233,11 +233,11 @@ To deploy an SSIS package from Visual Studio to the SSIS Catalog in SQL Server M
   <img src="https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/deploy_check.png" width="40%"/>
 </p>
 
-## ⏰ SSIS Deployment with Environment Parameters and SQL Server Agent Job
+### SSIS Deployment with Environment Parameters and SQL Server Agent Job
 
 This guide outlines the steps to deploy an SSIS package to **SSISDB** using **Environment Parameters**, and schedule its execution via **SQL Server Agent Job**. Ideal for Dev/Test/Prod scenarios requiring dynamic configuration.
 
-## 🧭 Deployment Steps
+### Deployment Steps
 
 ### 1. Create an Environment in SSISDB
 - Open **Integration Services Catalogs** in SSMS.
@@ -272,12 +272,12 @@ This guide outlines the steps to deploy an SSIS package to **SSISDB** using **En
   - Go to the **Schedules** tab → click **New**.
   - Set the frequency, time, and enable the schedule as needed.
 
-## ✅ Additional Tips
+### Additional Tips
 - Make sure all required parameters are exposed as **Package Parameters**, not just **Project Parameters**, for better flexibility.
 - Use consistent and descriptive variable names for easier mapping.
 - Check SQL Server Agent logs for troubleshooting if the job fails.
 
-## 📁 Recommended SSISDB Structure and Settings for Scheduling
+### Recommended SSISDB Structure and Settings for Scheduling
 Use SQL Server Agent to schedule packages, ensuring they run automatically at set intervals. 
 <div align="center">
 <img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/scheduling.png">
@@ -285,16 +285,16 @@ Use SQL Server Agent to schedule packages, ensuring they run automatically at se
 
 ## 🌐 Integrating Exchange Rates via API (SSIS + C#)
 
-### 📦 Duplicate and Modify SSIS Package
+### Duplicate and Modify SSIS Package
 1. Copy the existing SSIS package `financial_transactions.dtsx`.
 2. Rename the copy to `financial_transactions-API.dtsx`.
 3. Open the new package and navigate to the **Data Flow** tab under the `ExchangeRates` task.
 
-### 🔧 Replace Excel Source with API
+### Replace Excel Source with API
 1. In the **SSIS Toolbox**, drag in a **Script Component** and set its type to **Source**.
 2. This component will replace the previous Excel source (`exchange_rates.xlsx`) as the new data provider.
 
-### ⚙️ Configure Script Component Output
+### Configure Script Component Output
 Define the following output columns:
 - `from_currency` (string)
 - `to_currency` (string)
@@ -303,7 +303,7 @@ Define the following output columns:
 
 Make sure the data types match the expected API response format.
 
-### 🧠 Implement C# Script for API Call
+### Implement C# Script for API Call
 1. Click **Edit Script** on the Script Component.
 2. Write the logic inside the `CreateNewOutputRows()` method to:
    - Perform an HTTP GET request to the exchange rate API.
@@ -311,7 +311,7 @@ Make sure the data types match the expected API response format.
    - Populate the output buffer with the parsed data.
 
 💡 You can refer to the sample script in [`scriptAPI.cs`](settings/scriptAPI.cs)
-### 🔄 Updated Data Flow Sequence
+### Updated Data Flow Sequence
 ```text
 Script Component (Exchange API)
         ↓
@@ -322,14 +322,14 @@ Derived Column (optional logic, e.g. converting to base currency)
 OLE DB Destination → dbo.exchange_rates
 ```
 
-### 🧹 Pre-Load Cleanup
+### Pre-Load Cleanup
 To avoid duplicate entries, add an **Execute SQL Task** before the Data Flow Task:
 
 ```sql
 TRUNCATE TABLE dbo.exchange_rates
 ```
 
-### ✅ Additional Notes
+### Additional Notes
 - Ensure internet connectivity during package execution.
 - If the API has rate limits, consider adding retry logic or delay handling in the script.
 - Validate incoming data (e.g., exchange rates should not be zero or negative).
