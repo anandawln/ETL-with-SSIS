@@ -87,24 +87,6 @@ GO
 ```
 ---
 
-### Source Database Setup (`financial_transactions_db`)
-1. Create a database named `financial_transactions_db` in SQL Server Management Studio (SSMS).
-2. Create the table `financial_transactions` with columns:
-   - `transaction_id`, `customer_id`, `supplier_name`, `transaction_date`, `amount`, `currency`
-3. Insert transaction data into the table.
-4. Create the table `customer_details` with columns:
-   - `customer_id`, `customer_name`, `email`, `phone`
-5. Insert customer data into the table.
-
-### External Data Sources
-Include two external files:
-- `exchange_rates.xlsx` containing: `from_currency`, `to_currency`, `exchange_rate`, `effective_date`
-- `suppliers.csv` containing: `supplier_id`, `supplier_name`, `contact_name`, `phone`
-
-### Target Data Warehouse Setup (`financial_data_warehouse`)
-1. Create a new database named `financial_data_warehouse`.
-2. Create the table `financial_transactions` with the same structure as the source table.
-
 ### SSIS Data Flow Task – `CustomerTransactions`
 1. Create a Data Flow Task named `CustomerTransactions`.
 2. Add components:
@@ -115,6 +97,7 @@ Include two external files:
 ### Project Connection Configuration
 1. In SSIS, right-click both connections (`financial_transactions_db` and `financial_data_warehouse`) in the Connection Manager.
 2. Select **Convert to Project Connection** so they appear in the Solution Manager.
+
 
 ### Data Enrichment via SQL Join
 1. Use the following SQL query to enrich transaction data with customer details:
@@ -176,6 +159,7 @@ TRUNCATE TABLE dbo.exchange_rates
 TRUNCATE TABLE dbo.suppliers
 ```
 
+
 ### Currency Conversion
 Add a new column to store converted amounts:
 
@@ -184,7 +168,7 @@ ALTER TABLE dbo.financial_transactions
 ADD amount_USD FLOAT
 ```
 
-### Supplier Contact Enrichment *(Optional Enhancement)*
+### Supplier Contact Enrichment
 Add supplier contact details to the warehouse table:
 
 ```sql
@@ -192,6 +176,11 @@ ALTER TABLE dbo.financial_transactions
 ADD supplier_contact_name VARCHAR(100), 
     supplier_phone VARCHAR(20)
 ```
+<div align="center">
+<img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/suppliers_cf.png">
+</div>
+
+
 ## 🔧 Setting Project Parameters for Connection Strings
 
 To make your SSIS package deployment more flexible and environment-aware, it's recommended to parameterize your **Connection Managers** using **Project Parameters**. This allows you to dynamically assign connection strings based on the selected environment (e.g., Dev, Test, Prod).
