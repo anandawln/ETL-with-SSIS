@@ -304,15 +304,9 @@ Make sure the data types match the expected API response format.
 
 💡 You can refer to the sample script in [`scriptAPI.cs`](settings/scriptAPI.cs)
 ### Updated Data Flow Sequence
-```text
-Script Component (Exchange API)
-        ↓
-Data Conversion
-        ↓
-Derived Column (optional logic, e.g. converting to base currency)
-        ↓
-OLE DB Destination → dbo.exchange_rates
-```
+<div align="center">
+<img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/exchange_api.png">
+</div>
 
 ### Pre-Load Cleanup
 To avoid duplicate entries, add an **Execute SQL Task** before the Data Flow Task:
