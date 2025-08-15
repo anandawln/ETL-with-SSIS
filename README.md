@@ -159,6 +159,9 @@ TRUNCATE TABLE dbo.exchange_rates
 TRUNCATE TABLE dbo.suppliers
 ```
 
+<div align="center">
+<img width = "80%" src = "https://github.com/anandawln/ETL-with-SSIS/blob/main/assets/controlflow.png">
+</div>
 
 ### Currency Conversion
 Add a new column to store converted amounts:
